@@ -12,8 +12,11 @@ class UserListItem extends StatelessWidget {
       leading: Avatar(
         imageUrl: user.avatar,
       ),
-      title: Text(user.fullName),
-      subtitle: Text(user.email.toUpperCase()),
+      title: Text(
+        user.fullName,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(user.email),
     );
   }
 }
