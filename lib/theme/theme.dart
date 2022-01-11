@@ -34,5 +34,6 @@ mixin AppTheme {
       headline5: TextStyle(fontWeight: FontWeight.bold),
       headline6: TextStyle(fontWeight: FontWeight.bold),
     ),
+    scaffoldBackgroundColor: Colors.white,
   );
 }
