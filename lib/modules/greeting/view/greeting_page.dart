@@ -27,14 +27,10 @@ class GreetingPage extends StatelessWidget {
             ),
             BlocBuilder<NameBloc, NameState>(
               builder: (context, state) {
-                if (state is NameLoadSuccess) {
-                  return Text(
-                    state.name,
-                    style: Theme.of(context).textTheme.headline6,
-                  );
-                }
-
-                return const SizedBox();
+                return Text(
+                  state.name,
+                  style: Theme.of(context).textTheme.headline6,
+                );
               },
             ),
             Expanded(

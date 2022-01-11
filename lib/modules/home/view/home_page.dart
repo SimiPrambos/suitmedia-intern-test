@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suitmedia/l10n/l10n.dart';
 import 'package:suitmedia/modules/greeting/greeting.dart';
 import 'package:suitmedia/modules/home/home.dart';
+import 'package:suitmedia/utils/utils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,11 +14,35 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _nameController = TextEditingController();
+  final _palindromeController = TextEditingController();
 
   @override
   void dispose() {
     _nameController.dispose();
+    _palindromeController.dispose();
     super.dispose();
+  }
+
+  void _onCheckPressed() {
+    final value = _palindromeController.text;
+    if (value.isEmpty) {
+      _showDialog('Palindrome field is required.');
+    } else {
+      final isPalindrome = Utils.isPalindrome(value);
+      _showDialog(isPalindrome ? 'isPalindrome' : 'not palindrome');
+    }
+  }
+
+  void _showDialog(String message) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => Dialog(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text(message),
+        ),
+      ),
+    );
   }
 
   @override
@@ -54,24 +79,25 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 22),
                 TextField(
+                  controller: _palindromeController,
                   decoration: InputDecoration(
                     hintText: context.l10n.palindrome,
                   ),
+                  autocorrect: false,
                 ),
                 const SizedBox(height: 45),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: _onCheckPressed,
                   child: Text(context.l10n.check.toUpperCase()),
                 ),
                 const SizedBox(height: 15),
                 TextButton(
                   onPressed: () {
                     final state = context.read<NameBloc>().state;
-                    if (state is NameLoadFailure) {
-                      print(state.message);
-                    }
-                    if (state is NameLoadSuccess) {
+                    if (state.isValid) {
                       Navigator.of(context).push(GreetingPage.route);
+                    } else {
+                      _showDialog('Name field is required.');
                     }
                   },
                   child: Text(context.l10n.next.toUpperCase()),

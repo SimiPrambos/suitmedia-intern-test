@@ -1,16 +1,20 @@
 part of 'name_bloc.dart';
 
-@immutable
-abstract class NameState {}
+class NameState extends Equatable {
+  const NameState({this.name = ''});
 
-class NameInitial extends NameState {}
-
-class NameLoadSuccess extends NameState {
-  NameLoadSuccess(this.name);
   final String name;
-}
 
-class NameLoadFailure extends NameState {
-  NameLoadFailure(this.message);
-  final String message;
+  bool get isValid => name.isNotEmpty;
+
+  @override
+  List<Object?> get props => [name];
+
+  NameState copyWith({
+    String? name,
+  }) {
+    return NameState(
+      name: name ?? this.name,
+    );
+  }
 }
