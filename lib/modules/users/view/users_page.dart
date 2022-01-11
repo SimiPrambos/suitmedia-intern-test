@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suitmedia/modules/users/bloc/users_bloc.dart';
+import 'package:suitmedia/modules/users/widgets/user_list_item.dart';
 
 class UsersPage extends StatefulWidget {
   const UsersPage({Key? key}) : super(key: key);
@@ -54,12 +55,7 @@ class _UsersPageState extends State<UsersPage> {
                     );
                   }
 
-                  final user = state.users[index];
-                  return ListTile(
-                    leading: const CircleAvatar(),
-                    title: Text(user.fullName),
-                    subtitle: Text(user.email),
-                  );
+                  return UserListItem(user: state.users[index]);
                 },
               );
             case UsersStateStatus.initial:
