@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suitmedia/l10n/l10n.dart';
 import 'package:suitmedia/modules/home/home.dart';
+import 'package:suitmedia/modules/users/users.dart';
 
 class GreetingPage extends StatelessWidget {
   const GreetingPage({Key? key}) : super(key: key);
@@ -51,7 +52,9 @@ class GreetingPage extends StatelessWidget {
         width: double.maxFinite,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(UsersPage.route);
+          },
           child: Text(context.l10n.chooseUser),
         ),
       ),

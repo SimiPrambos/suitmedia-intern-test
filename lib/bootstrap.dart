@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suitmedia/data/data.dart';
+import 'package:suitmedia/modules/modules.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -26,7 +28,22 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
-        () async => runApp(await builder()),
+        () async => runApp(
+          RepositoryProvider<UserRepository>(
+            create: (_) => UserRepositoryImpl(ReqresInApiService()),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider<NameBloc>(create: (context) => NameBloc()),
+                BlocProvider<UsersBloc>(
+                  create: (context) => UsersBloc(
+                    context.read<UserRepository>(),
+                  ),
+                ),
+              ],
+              child: await builder(),
+            ),
+          ),
+        ),
         blocObserver: AppBlocObserver(),
       );
     },
