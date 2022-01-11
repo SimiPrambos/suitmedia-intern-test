@@ -21,6 +21,14 @@ class _UsersPageState extends State<UsersPage> {
     context.read<UsersBloc>().add(UsersRequested());
   }
 
+  bool _onPageScrolled(ScrollNotification sn) {
+    final isScrollUpEnded = sn.metrics.pixels == sn.metrics.maxScrollExtent;
+    if (isScrollUpEnded) {
+      context.read<UsersBloc>().add(UsersLoadMoreRequested());
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,23 +52,26 @@ class _UsersPageState extends State<UsersPage> {
                     child: Text('No users found'),
                   );
                 }
-                return ListView.separated(
-                  padding: const EdgeInsets.all(20),
-                  itemCount: state.itemCount,
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemBuilder: (context, index) {
-                    if (index >= state.users.length) {
-                      return const Center(
-                        child: SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(strokeWidth: 1.5),
-                        ),
-                      );
-                    }
+                return NotificationListener<ScrollNotification>(
+                  onNotification: _onPageScrolled,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(20),
+                    itemCount: state.itemCount,
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemBuilder: (context, index) {
+                      if (index >= state.users.length) {
+                        return const Center(
+                          child: SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(strokeWidth: 1.5),
+                          ),
+                        );
+                      }
 
-                    return UserListItem(user: state.users[index]);
-                  },
+                      return UserListItem(user: state.users[index]);
+                    },
+                  ),
                 );
               case UsersStateStatus.initial:
                 return const Center(child: CircularProgressIndicator());
