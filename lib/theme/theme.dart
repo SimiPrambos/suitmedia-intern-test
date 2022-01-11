@@ -11,6 +11,7 @@ mixin AppTheme {
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       color: Colors.white,
       foregroundColor: Colors.black,
+      elevation: .5,
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
