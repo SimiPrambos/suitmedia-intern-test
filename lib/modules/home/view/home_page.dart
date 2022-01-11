@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       final isPalindrome = Utils.isPalindrome(value);
       _showDialog(isPalindrome ? 'isPalindrome' : 'not palindrome');
+      _palindromeController.clear();
     }
   }
 
