@@ -39,9 +39,16 @@ class GreetingPage extends StatelessWidget {
             ),
             Expanded(
               child: Center(
-                child: Text(
-                  'Selected User Name',
-                  style: Theme.of(context).textTheme.headline5,
+                child: BlocBuilder<UsersBloc, UsersState>(
+                  builder: (context, state) {
+                    if (state.selected != null) {
+                      return Text(
+                        state.selected!.fullName,
+                        style: Theme.of(context).textTheme.headline5,
+                      );
+                    }
+                    return const SizedBox();
+                  },
                 ),
               ),
             ),

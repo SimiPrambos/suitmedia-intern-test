@@ -69,7 +69,14 @@ class _UsersPageState extends State<UsersPage> {
                         );
                       }
 
-                      return UserListItem(user: state.users[index]);
+                      final user = state.users[index];
+                      return UserListItem(
+                        user: user,
+                        selected: state.selected == user,
+                        onPressed: () {
+                          context.read<UsersBloc>().add(UsersSelected(user));
+                        },
+                      );
                     },
                   ),
                 );

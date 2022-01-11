@@ -16,6 +16,7 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   UsersBloc(this.repository) : super(const UsersState()) {
     on<UsersRequested>(_onUsersRequested);
+    on<UsersSelected>(_onUsersSelected);
     on<UsersLoadMoreRequested>(
       _onUsersLoadMoreRequested,
       transformer: throttleDroppable(const Duration(milliseconds: 100)),
@@ -63,5 +64,12 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     } catch (e) {
       emit(state.copyWith(status: UsersStateStatus.failure));
     }
+  }
+
+  Future<void> _onUsersSelected(
+    UsersSelected event,
+    Emitter<UsersState> emit,
+  ) async {
+    emit(state.copyWith(selected: event.user));
   }
 }
