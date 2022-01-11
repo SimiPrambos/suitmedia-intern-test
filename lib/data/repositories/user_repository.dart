@@ -29,6 +29,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<User?> findById() {
+    // ignore: flutter_style_todos
     // TODO: implement findById
     throw UnimplementedError();
   }
