@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:suitmedia/app/app.dart';
-import 'package:suitmedia/home/home.dart';
+import 'package:suitmedia/modules/home/home.dart';
 
 void main() {
   group('App', () {

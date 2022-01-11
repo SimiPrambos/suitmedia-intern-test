@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suitmedia/home/home.dart';
 import 'package:suitmedia/l10n/l10n.dart';
+import 'package:suitmedia/modules/home/home.dart';
 
 class GreetingPage extends StatelessWidget {
   const GreetingPage({Key? key}) : super(key: key);

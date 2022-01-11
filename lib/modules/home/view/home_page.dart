@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:suitmedia/greeting/greeting.dart';
-import 'package:suitmedia/home/bloc/name_bloc.dart';
 import 'package:suitmedia/l10n/l10n.dart';
+import 'package:suitmedia/modules/greeting/greeting.dart';
+import 'package:suitmedia/modules/home/home.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:suitmedia/home/home.dart';
 import 'package:suitmedia/l10n/l10n.dart';
+import 'package:suitmedia/modules/modules.dart';
 import 'package:suitmedia/theme/theme.dart';
 
 class App extends StatelessWidget {
