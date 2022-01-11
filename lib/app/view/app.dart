@@ -4,6 +4,7 @@ import 'package:suitmedia/greeting/greeting.dart';
 import 'package:suitmedia/home/home.dart';
 import 'package:suitmedia/l10n/l10n.dart';
 import 'package:suitmedia/theme/theme.dart';
+import 'package:suitmedia/users/users.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const GreetingPage(),
+      home: const UsersPage(),
     );
   }
 }
