@@ -15,8 +15,9 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
   UsersBloc(this.repository) : super(const UsersState()) {
-    on<UsersRequested>(
-      _onUsersRequested,
+    on<UsersRequested>(_onUsersRequested);
+    on<UsersLoadMoreRequested>(
+      _onUsersLoadMoreRequested,
       transformer: throttleDroppable(const Duration(milliseconds: 100)),
     );
   }
@@ -27,21 +28,29 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     UsersRequested event,
     Emitter<UsersState> emit,
   ) async {
+    emit(state.copyWith(status: UsersStateStatus.initial));
+    try {
+      final result = await repository.findAll();
+      emit(
+        state.copyWith(
+          status: UsersStateStatus.success,
+          users: result.data,
+          page: result.page,
+          hasReachedMax: result.hasReachedMax,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: UsersStateStatus.failure));
+    }
+  }
+
+  Future<void> _onUsersLoadMoreRequested(
+    UsersLoadMoreRequested event,
+    Emitter<UsersState> emit,
+  ) async {
     if (state.hasReachedMax) return;
 
     try {
-      if (state.status == UsersStateStatus.initial) {
-        final result = await repository.findAll();
-        return emit(
-          state.copyWith(
-            status: UsersStateStatus.success,
-            users: result.data,
-            page: result.page,
-            hasReachedMax: result.hasReachedMax,
-          ),
-        );
-      }
-
       final result = await repository.findAll(page: state.page + 1);
       emit(
         state.copyWith(

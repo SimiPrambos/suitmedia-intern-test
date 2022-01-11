@@ -6,3 +6,5 @@ abstract class UsersEvent extends Equatable {
 }
 
 class UsersRequested extends UsersEvent {}
+
+class UsersLoadMoreRequested extends UsersEvent {}

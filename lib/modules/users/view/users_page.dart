@@ -27,41 +27,46 @@ class _UsersPageState extends State<UsersPage> {
       appBar: AppBar(
         title: const Text('Third Screen'),
       ),
-      body: BlocBuilder<UsersBloc, UsersState>(
-        builder: (context, state) {
-          switch (state.status) {
-            case UsersStateStatus.failure:
-              return const Center(
-                child: Text('failed to fetch users'),
-              );
-            case UsersStateStatus.success:
-              if (state.users.isEmpty) {
-                return const Center(
-                  child: Text('No users found'),
-                );
-              }
-              return ListView.separated(
-                padding: const EdgeInsets.all(20),
-                itemCount: state.itemCount,
-                separatorBuilder: (context, index) => const Divider(),
-                itemBuilder: (context, index) {
-                  if (index >= state.users.length) {
-                    return const Center(
-                      child: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 1.5),
-                      ),
-                    );
-                  }
-
-                  return UserListItem(user: state.users[index]);
-                },
-              );
-            case UsersStateStatus.initial:
-              return const Center(child: CircularProgressIndicator());
-          }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<UsersBloc>().add(UsersRequested());
         },
+        child: BlocBuilder<UsersBloc, UsersState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case UsersStateStatus.failure:
+                return const Center(
+                  child: Text('failed to fetch users'),
+                );
+              case UsersStateStatus.success:
+                if (state.users.isEmpty) {
+                  return const Center(
+                    child: Text('No users found'),
+                  );
+                }
+                return ListView.separated(
+                  padding: const EdgeInsets.all(20),
+                  itemCount: state.itemCount,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (context, index) {
+                    if (index >= state.users.length) {
+                      return const Center(
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(strokeWidth: 1.5),
+                        ),
+                      );
+                    }
+
+                    return UserListItem(user: state.users[index]);
+                  },
+                );
+              case UsersStateStatus.initial:
+                return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
