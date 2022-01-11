@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:suitmedia/greeting/greeting.dart';
+import 'package:suitmedia/home/bloc/name_bloc.dart';
+import 'package:suitmedia/l10n/l10n.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +42,39 @@ class HomePage extends StatelessWidget {
                   height: 115,
                 ),
                 const SizedBox(height: 50),
-                const TextField(
-                  decoration: InputDecoration(hintText: 'Name'),
+                TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    hintText: context.l10n.name,
+                  ),
+                  autocorrect: false,
+                  onChanged: (value) {
+                    context.read<NameBloc>().add(NameChanged(value));
+                  },
                 ),
                 const SizedBox(height: 22),
-                const TextField(
-                  decoration: InputDecoration(hintText: 'Palindrome'),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: context.l10n.palindrome,
+                  ),
                 ),
                 const SizedBox(height: 45),
                 TextButton(
                   onPressed: () {},
-                  child: const Text('CHECK'),
+                  child: Text(context.l10n.check.toUpperCase()),
                 ),
                 const SizedBox(height: 15),
                 TextButton(
-                  onPressed: () {},
-                  child: const Text('NEXT'),
+                  onPressed: () {
+                    final state = context.read<NameBloc>().state;
+                    if (state is NameLoadFailure) {
+                      print(state.message);
+                    }
+                    if (state is NameLoadSuccess) {
+                      Navigator.of(context).push(GreetingPage.route);
+                    }
+                  },
+                  child: Text(context.l10n.next.toUpperCase()),
                 ),
               ],
             ),
