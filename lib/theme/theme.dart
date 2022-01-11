@@ -7,14 +7,11 @@ mixin AppTheme {
   static ThemeData light = ThemeData(
     brightness: Brightness.light,
     primaryColor: primaryColor,
-    fontFamily: 'Inter',
-
-    // AppBar
     appBarTheme: const AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle.light,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      color: Colors.white,
+      foregroundColor: Colors.black,
     ),
-
-    // button
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         primary: Colors.white,
@@ -25,13 +22,16 @@ mixin AppTheme {
         ),
       ),
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       fillColor: Colors.white,
       filled: true,
+    ),
+    textTheme: const TextTheme(
+      headline5: TextStyle(fontWeight: FontWeight.bold),
+      headline6: TextStyle(fontWeight: FontWeight.bold),
     ),
   );
 }

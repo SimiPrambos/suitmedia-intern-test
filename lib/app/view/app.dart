@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:suitmedia/greeting/greeting.dart';
 import 'package:suitmedia/home/home.dart';
 import 'package:suitmedia/l10n/l10n.dart';
 import 'package:suitmedia/theme/theme.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomePage(),
+      home: const GreetingPage(),
     );
   }
 }
