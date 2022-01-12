@@ -11,6 +11,7 @@ A Very Good Project created by Very Good CLI.
 ---
 
 ## Screenshots
+https://user-images.githubusercontent.com/24631149/149045685-2cd8e0fa-4cb9-48bd-9d8a-8bee0806941c.mp4?width=200&height=200
 ![1](screenshots/1.png)
 ![2](screenshots/2.png)
 ![3](screenshots/3.png)
